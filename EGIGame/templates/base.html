@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <title>EGI Game!!!</title>
+     {% load staticfiles %}
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css" />
+    <style>
+body {
+	    background-image: url("{% static 'ericssionbg.jpg' %}");
+        background-repeat:no-repeat;
+        background-size:cover;
+        height:100%;
+        display:table; width:100%;
+        text-align:center; vertical-align:middle;
+         align:center;
+     }
+
+h1,h4{
+        color: white;
+   }
+
+   table {
+  margin: 2cm;
+}
+
+form { display: inline-block; }
+
+td {
+color: white;
+text-align: left;
+padding: 0.5cm;
+}
+
+    </style>
+</head>
+<body>
+
+{% block content %}
+
+{% endblock %}
+
+ <script src="{% static 'js/jquery.min.js'%}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/validate.js' %}"></script>
+</body>
+</html>

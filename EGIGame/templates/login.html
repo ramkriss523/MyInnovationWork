@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block content %}
+<form id="login_form" class="form-inline" name="login_form" method="post">
+    {% csrf_token %}
+    <br><br>
+    <h1>Welcome to EGI Game!!!!!!!</h1>
+<br><br>
+     <input type="text" class="form-control" name="fullname" placeholder="Full Name" required><br><br>
+     <input type="text" class="form-control" name="signumname" placeholder="Signum" required><br><br>
+    <input class="btn btn-primary" type="submit" value="Submit" id="login_button" name="log_in">
+</form>
+{% endblock %}
