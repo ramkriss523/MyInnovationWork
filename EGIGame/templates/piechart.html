@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>EGI Game!!!</title>
+
+   <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
+   <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
+
+</head>
+<body style="font-family:'Helvetica Neue', Arial; font-size: 16px;">
+{% load static %}
+	<h1 align="center">{{ loggeduser }}</h1>
+	<div id="chart-1">{{ output|safe }}</div>
+	<div id="chart-2">{{ output_2|safe }}</div>
+	<br/>
+	<a href="/">Back</a>
+</body>
+</html>
+
+
