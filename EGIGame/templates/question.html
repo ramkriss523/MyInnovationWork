@@ -3,9 +3,55 @@
 
 {% load static %}
 
-<form method="post">
-     {% csrf_token %}
-Result.......
-    <input type="submit" value="Submit">
+<form id="dash_form" class="form-inline" name="dash_form" method="post">
+    {% csrf_token %}
+    <br><br>
+    <h1>Welcome to QUIZ {{ loggeduser }}</h1>
+
+    <br>
+
+    <div id="first_row">
+
+        <div>
+            <h2>{{ list_data.question }}</h2>
+        </div>
+        <br>
+
+        <div>
+            <h4 align="left">A. {{ list_data.option0 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">B. {{ list_data.option1 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">C. {{ list_data.option2 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">D. {{ list_data.option3 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">E. {{ list_data.option4 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">F. {{ list_data.option5 }}</h4>
+        </div>
+
+        <br>
+        <input type=hidden id="abcId" class="form-control" name="abcName"
+                  value={{ flag_data }}/>
+        <input type="text" class="form-control" name="option1" placeholder="Choice 1" required>
+        <input type="text" class="form-control" name="option2" placeholder="Choice 2" required>
+        <input type="text" class="form-control" name="option3" placeholder="Choice 3" required>
+    </div>
+
+
+    <br><br>
+    <div class="row">
+        <div class="form-group text-center col-sm-2 col-sm-offset-5">
+            <input type="submit" class="form-control form-control-lg" name="submit" value="Next" id="next_btn"/>
+        </div>
+    </div>
+
+    <br><br>
 </form>
 {% endblock %}

@@ -4,33 +4,54 @@
 {% load static %}
 
 <form id="dash_form" class="form-inline" name="dash_form" method="post">
-     {% csrf_token %}
-<h1>Welcome to QUIZ {{ loggeduser }}</h1>
+    {% csrf_token %}
+    <br><br>
+    <h1>Welcome to QUIZ {{ loggeduser }}</h1>
 
-<table border="1" CELLPADDING="5" align="center">
-            {% for product in object_list %}
-            <tr>
-                <td colspan="6"><h4>{{ product.question }}</h4></td>
-            </tr>
-            <tr>
-                <td><label><input type="checkbox" name="checkbox" value="{{ product.option1 }}"></label> {{ product.option1 }}<br></td>
-                <td><label><input type="checkbox" name="checkbox" value="{{ product.option2 }}"></label> {{ product.option2 }}<br></td>
-                <td><label><input type="checkbox" name="checkbox" value="{{ product.option3 }}"></label> {{ product.option3 }}<br></td>
-                <td><label><input type="checkbox" name="checkbox" value="{{ product.option4 }}"></label> {{ product.option4 }}<br></td>
-                <td><label><input type="checkbox" name="checkbox" value="{{ product.option5 }}"></label> {{ product.option5 }}<br></td>
-                <td><label><input type="checkbox" name="checkbox" value="{{ product.option6 }}"></label> {{ product.option6 }}<br></td>
-            </tr>
-            {% endfor %}
-</table>
+    <br>
 
-      <br><br>
+    <div id="first_row">
 
-                        <div class="row">
-                            <div class="form-group text-center col-sm-2 col-sm-offset-5">
-                                <input type="submit" class="form-control form-control-lg" name="submit" value="submit"/>
-                            </div>
-                        </div>
+        <div>
+            <h2>{{ list_data.question }}</h2>
+        </div>
+        <br>
 
-     <br><br>
+        <div>
+            <h4 align="left">A. {{ list_data.option0 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">B. {{ list_data.option1 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">C. {{ list_data.option2 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">D. {{ list_data.option3 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">E. {{ list_data.option4 }}</h4>
+        </div>
+        <div>
+            <h4 align="left">F. {{ list_data.option5 }}</h4>
+        </div>
+
+          <br>
+         <input type=hidden id="abcId" class="form-control" name="abcName"
+                  value={{ flag_data }}/>
+    <input type="text" class="form-control" name="option1" placeholder="Choice 1" required>
+    <input type="text" class="form-control" name="option2" placeholder="Choice 2" required>
+    <input type="text" class="form-control" name="option3" placeholder="Choice 3" required>
+    </div>
+
+
+    <br><br>
+    <div class="row">
+        <div class="form-group text-center col-sm-2 col-sm-offset-5">
+            <input type="submit" class="form-control form-control-lg" name="submit" value="Next" id="next_btn"/>
+        </div>
+    </div>
+
+    <br><br>
 </form>
 {% endblock %}
