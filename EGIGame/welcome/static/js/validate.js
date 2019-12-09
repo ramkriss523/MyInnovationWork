@@ -21,6 +21,11 @@
  $("#dash_form").submit(function(e){
       e.preventDefault();
 
+//        var flagval = validation(document.forms["dash_form"]["option1"].value,document.forms["dash_form"]["option2"].value
+//        ,document.forms["dash_form"]["option3"].value);
+//        console.log(flagval)
+
+//        if(flagval){
         if (document.forms["dash_form"]["abcId"].value == "6/") {
          $.post("/quiz/chart/",
            {
@@ -45,4 +50,19 @@
            }
        );
        }
+//       }else{
+//            alert("Options should be unique!!!")
+//       }
  });
+
+ function validation(data1, data2, data3){
+    if (data1== data2){
+        return false;
+    }
+
+}
+
+//$(".img-circular").click(function(){
+//    $("input").trigger("click");
+//
+//});

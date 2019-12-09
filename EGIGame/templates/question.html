@@ -17,33 +17,82 @@
         </div>
         <br>
 
-        <div>
-            <h4 align="left">A. {{ list_data.option0 }}</h4>
+        <div class="container">
+
+            <div class="sidebyside">
+                <img src="{% static 'images/Progress_Logo.png' %}">
+                <h4 align="center">A. {{ list_data.option0 }}</h4>
+            </div>
+            <div class="sidebyside">
+                <img src="{% static 'images/Progress_Logo.png' %}">
+                <h4 align="center">B. {{ list_data.option1 }}</h4>
+            </div>
+            <div class="sidebyside">
+                <img src="{% static 'images/Progress_Logo.png' %}">
+                <h4 align="center">C. {{ list_data.option2 }}</h4>
+            </div>
+
         </div>
-        <div>
-            <h4 align="left">B. {{ list_data.option1 }}</h4>
-        </div>
-        <div>
-            <h4 align="left">C. {{ list_data.option2 }}</h4>
-        </div>
-        <div>
-            <h4 align="left">D. {{ list_data.option3 }}</h4>
-        </div>
-        <div>
-            <h4 align="left">E. {{ list_data.option4 }}</h4>
-        </div>
-        <div>
-            <h4 align="left">F. {{ list_data.option5 }}</h4>
+        <div class="container">
+            <div class="sidebyside">
+                <img src="{% static 'images/Progress_Logo.png' %}">
+                <h4 align="center">D. {{ list_data.option3 }}</h4>
+            </div>
+            <div class="sidebyside">
+                <img src="{% static 'images/Progress_Logo.png' %}">
+                <h4 align="center">E. {{ list_data.option4 }}</h4>
+            </div>
+            <div class="sidebyside">
+                <img src="{% static 'images/Progress_Logo.png' %}">
+                <h4 align="center">F. {{ list_data.option5 }}</h4>
+            </div>
+
         </div>
 
         <br>
         <input type=hidden id="abcId" class="form-control" name="abcName"
-                  value={{ flag_data }}/>
-        <input type="text" class="form-control" name="option1" placeholder="Choice 1" required>
-        <input type="text" class="form-control" name="option2" placeholder="Choice 2" required>
-        <input type="text" class="form-control" name="option3" placeholder="Choice 3" required>
-    </div>
+               value={{ flag_data }}/>
 
+        <div class="container">
+            <div class="sidebyside">
+                <select id="option1" class="form-control" required>
+                    <option disabled selected value="">Select your option1</option>
+                    <option>{{ list_data.option0 }}</option>
+                    <option>{{ list_data.option1 }}</option>
+                    <option>{{ list_data.option2 }}</option>
+                    <option>{{ list_data.option3 }}</option>
+                    <option>{{ list_data.option4 }}</option>
+                    <option>{{ list_data.option5 }}</option>
+                    <option>{{ list_data.option6 }}</option>
+                </select>
+            </div>
+            <div class="sidebyside">
+                <select id="option2" class="form-control" required>
+                    <option disabled selected value="">Select your option2</option>
+                    <option>{{ list_data.option0 }}</option>
+                    <option>{{ list_data.option1 }}</option>
+                    <option>{{ list_data.option2 }}</option>
+                    <option>{{ list_data.option3 }}</option>
+                    <option>{{ list_data.option4 }}</option>
+                    <option>{{ list_data.option5 }}</option>
+                    <option>{{ list_data.option6 }}</option>
+                </select>
+            </div>
+            <div class="sidebyside">
+                <select id="option3" class="form-control" required>
+                    <option disabled selected value="">Select your option3</option>
+                    <option>{{ list_data.option0 }}</option>
+                    <option>{{ list_data.option1 }}</option>
+                    <option>{{ list_data.option2 }}</option>
+                    <option>{{ list_data.option3 }}</option>
+                    <option>{{ list_data.option4 }}</option>
+                    <option>{{ list_data.option5 }}</option>
+                    <option>{{ list_data.option6 }}</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
 
     <br><br>
     <div class="row">

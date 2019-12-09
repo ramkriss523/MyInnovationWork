@@ -22,6 +22,7 @@ dic_finaldata = {}
 commondata = ['Achiever', 'Philanthropist', 'Disruptor', 'Socializer', 'Player', 'Free Spirit']
 
 
+# Class Based View for Questionaries
 class HomePageView(TemplateView):
     template_name = "question.html"
 
@@ -31,7 +32,7 @@ class HomePageView(TemplateView):
         if int_data == 7:
             return render(request, 'piechart.html')
         else:
-            return render(request, self.template_name,
+             return render(request, self.template_name,
                           {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
 
     def post(self, request, **kwargs):
@@ -44,14 +45,17 @@ class HomePageView(TemplateView):
         global choice3
 
         choice1 = request.POST.get("choice1")
+        choice2 = request.POST.get("choice2")
+        choice3 = request.POST.get("choice3")
+
+        print(choice1,choice2,choice3)
+
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice1)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice1)) - 1], 0) + 100
 
-        choice2 = request.POST.get("choice2")
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice2)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice2)) - 1], 0) + 60
 
-        choice3 = request.POST.get("choice3")
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice3)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice3)) - 1], 0) + 20
 
@@ -75,10 +79,6 @@ class HomePageView(TemplateView):
                 'option4': entry_list[int_data].option5,
                 'option5': entry_list[int_data].option6,
             }
-
-            form = LocationForm(request.POST)
-            if form.is_valid():
-                pass  # do something with form.cleaned_data
 
             return render(request, self.template_name,
                           {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
@@ -111,12 +111,12 @@ def dashboard(request):
             'option5': entry_list[0].option6,
         }
 
-        if dbdata.UserData.objects.filter(signum=data_signum).exists():
-            print(True)
-            # return render(request, 'example.html')
-        else:
-            dbdata.UserData = dbdata.UserData(fullname=request.POST['fullname'], signum=request.POST['signumname'])
-            dbdata.UserData.save()
+        # if dbdata.UserData.objects.filter(signum=data_signum).exists():
+        #     print(True)
+        #     # return render(request, 'example.html')
+        # else:
+        #     dbdata.UserData = dbdata.UserData(fullname=request.POST['fullname'], signum=request.POST['signumname'])
+        #     dbdata.UserData.save()
 
     return render(request, "dashboard.html",
                   {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
@@ -149,8 +149,8 @@ def question(request):
     return render(request, "question.html", {'loggeduser': data_fullname})
 
 
+# Create an object for the pie3d chart using the FusionCharts class constructor
 def chart(request):
-    # Create an object for the pie3d chart using the FusionCharts class constructor
     pie3d = FusionCharts("pie3d", "ex2", "100%", "400", "chart-1", "json",
                          # The data is passed as a string in the `dataSource` as parameter.
                          """{

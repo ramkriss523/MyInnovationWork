@@ -29,3 +29,12 @@
         #bottom{
             text-align:center;
         }
+
+        .container {
+            display: flex;
+            flex-direction:row;
+        }
+
+        .sidebyside {
+             flex: 1 1 0px;
+        }
