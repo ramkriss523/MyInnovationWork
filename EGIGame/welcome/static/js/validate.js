@@ -1,9 +1,50 @@
 /**
  * Created by Ramakrishna on 21-11-2019.
  */
+
+$(document).ready(function() {
+        window.history.pushState(null, "", window.location.href);
+        window.onpopstate = function() {
+            window.history.pushState(null, "", window.location.href);
+        };
+});
+
+//Full Name validation -----------------
+function allLetter(uname)
+{
+var letters = /^[A-Za-z ]+$/;
+if(uname.value.match(letters))
+{
+return true;
+}
+else
+{
+alert('Full name must have alphabet characters only');
+uname.focus();
+return false;
+}
+}
+
+//Signum Validation ---------
+function signumValidation(signum)
+{
+if(signum.value.startsWith("e") && signum.value.length==7)
+{
+return true;
+}
+else
+{
+alert('Input valid Signum');
+signum.focus();
+return false;
+}
+}
+
+//Login Form submit click---------------
  $("#login_form").submit(function(e){
        e.preventDefault();
-
+       if(allLetter(document.forms["login_form"]["fullname"])){
+       if(signumValidation(document.forms["login_form"]["signumname"])){
         $.post("/quiz/dashboard/",
            {
                fullname : document.forms["login_form"]["fullname"].value,
@@ -15,20 +56,22 @@
                window.location.href="/quiz/dashboard/";
            }
        );
+       }
+       }
  });
 
+var val1="";
+var val2="";
+var val3="";
 
  $("#dash_form").submit(function(e){
       e.preventDefault();
-
-//        var flagval = validation(document.forms["dash_form"]["option1"].value,document.forms["dash_form"]["option2"].value
-//        ,document.forms["dash_form"]["option3"].value);
-//        console.log(flagval)
-
-//        if(flagval){
         if (document.forms["dash_form"]["abcId"].value == "6/") {
          $.post("/quiz/chart/",
            {
+               choice1 : val1,
+               choice2 : val2,
+               choice3 : val3,
                csrfmiddlewaretoken : document.forms["dash_form"]["csrfmiddlewaretoken"].value
            },
            function(data,status)
@@ -37,29 +80,130 @@
            }
        );
         }else{
+        if(document.getElementById("div21").childNodes.length == 0){
+            document.getElementById("div21").style["border"] = "2px solid red";
+       }else if(document.getElementById("div22").childNodes.length == 0){
+            document.getElementById("div22").style["border"] = "2px solid red";
+       }else if(document.getElementById("div23").childNodes.length == 0){
+            document.getElementById("div23").style["border"] = "2px solid red";
+       }else{
         $.post("/quiz/question/",
            {
-               choice1 : document.forms["dash_form"]["option1"].value,
-               choice2 : document.forms["dash_form"]["option2"].value,
-               choice3 : document.forms["dash_form"]["option3"].value,
+               choice1 : val1,
+               choice2 : val2,
+               choice3 : val3,
+
                csrfmiddlewaretoken : document.forms["dash_form"]["csrfmiddlewaretoken"].value
            },
            function(data,status)
            {
+                 $("#progress-bar").css("width", "48%");
+                $("#progress-bar").attr("aria-valuenow", "48%");
                window.location.href="/quiz/question/";
            }
        );
        }
-//       }else{
-//            alert("Options should be unique!!!")
-//       }
+       }
  });
 
- function validation(data1, data2, data3){
-    if (data1== data2){
-        return false;
-    }
+ function allowDrop(ev) {
+  ev.preventDefault();
+}
 
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function drop1(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById("div21").childNodes.length == 0){
+     document.getElementById("div21").style["border"] = "2px solid black";
+    val1 = document.getElementById(data).alt;
+  ev.target.appendChild(document.getElementById(data));
+
+  }
+}
+
+function drop2(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById("div22").childNodes.length == 0){
+   document.getElementById("div22").style["border"] = "2px solid black";
+  val2 = document.getElementById(data).alt;
+  ev.target.appendChild(document.getElementById(data));
+ }
+}
+
+function drop3(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById("div23").childNodes.length == 0){
+   document.getElementById("div23").style["border"] = "2px solid black";
+  val3 = document.getElementById(data).alt;
+  ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+function drop11(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById(data).id.toString()=="drag11"){
+     ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+function drop12(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById(data).id.toString()=="drag12"){
+     ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+function drop13(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById(data).id.toString()=="drag13"){
+     ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+function drop14(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById(data).id.toString()=="drag14"){
+     ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+function drop15(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById(data).id.toString()=="drag15"){
+     ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+function drop16(ev) {
+  ev.preventDefault();
+  var data = ev.dataTransfer.getData("text");
+  if(document.getElementById(data).id.toString()=="drag16"){
+     ev.target.appendChild(document.getElementById(data));
+  }
+}
+
+
+ function validation(data1, data2, data3){
+    if(data1==0){
+        return false;
+    }else if(data2==0){
+     return false;
+    }else if(data3==0){
+     return false;
+    }else{
+     return true;
+    }
 }
 
 //$(".img-circular").click(function(){

@@ -2,13 +2,10 @@
 {% block content %}
 
 {% load static %}
-
 <form id="dash_form" class="form-inline" name="dash_form" method="post">
     {% csrf_token %}
-    <br><br>
-    <h1>Welcome to QUIZ {{ loggeduser }}</h1>
-
     <br>
+    <h1>Welcome to QUIZ {{ loggeduser }}</h1>
 
     <div id="first_row">
 
@@ -18,83 +15,84 @@
         <br>
 
         <div class="container">
-
-            <div class="sidebyside">
-                <img src="{% static 'images/Progress_Logo.png' %}">
-                <h4 align="center">A. {{ list_data.option0 }}</h4>
+            <div>
+                <label>Choice1</label>
+                <div id="div21" ondrop="drop1(event)" ondragover="allowDrop(event)"></div>
             </div>
-            <div class="sidebyside">
-                <img src="{% static 'images/Progress_Logo.png' %}">
-                <h4 align="center">B. {{ list_data.option1 }}</h4>
+            <div>
+                <label>Choice2</label>
+                <div id="div22" ondrop="drop2(event)" ondragover="allowDrop(event)"></div>
             </div>
-            <div class="sidebyside">
-                <img src="{% static 'images/Progress_Logo.png' %}">
-                <h4 align="center">C. {{ list_data.option2 }}</h4>
+            <div>
+                <label>Choice3</label>
+                <div id="div23" ondrop="drop3(event)" ondragover="allowDrop(event)"></div>
             </div>
-
         </div>
+
         <div class="container">
-            <div class="sidebyside">
-                <img src="{% static 'images/Progress_Logo.png' %}">
-                <h4 align="center">D. {{ list_data.option3 }}</h4>
-            </div>
-            <div class="sidebyside">
-                <img src="{% static 'images/Progress_Logo.png' %}">
-                <h4 align="center">E. {{ list_data.option4 }}</h4>
-            </div>
-            <div class="sidebyside">
-                <img src="{% static 'images/Progress_Logo.png' %}">
-                <h4 align="center">F. {{ list_data.option5 }}</h4>
+            <div>
+                <div id="div11" ondrop="drop11(event)" ondragover="allowDrop(event)">
+                    <img src={{ list_data.image0 }} draggable="true" ondragstart="drag(event)"
+                         id="drag11" width="88"
+                         height="31" alt="{{ list_data.option0 }}">
+                </div>
+                <label>{{ list_data.option0 }}</label>
             </div>
 
+            <div>
+                <div id="div12" ondrop="drop12(event)" ondragover="allowDrop(event)">
+                    <img src={{ list_data.image1 }} draggable="true" ondragstart="drag(event)" id="drag12"
+                         width="88"
+                         height="31" alt="{{ list_data.option1 }}">
+                </div>
+                <label>{{ list_data.option1 }}</label>
+            </div>
+            <div>
+                <div id="div13" ondrop="drop13(event)" ondragover="allowDrop(event)">
+                    <img src={{ list_data.image2 }} draggable="true" ondragstart="drag(event)" id="drag13"
+                         width="88"
+                         height="31" alt="{{ list_data.option2 }}">
+                </div>
+                <label>{{ list_data.option2 }}</label>
+            </div>
+            <div>
+                <div id="div14" ondrop="drop14(event)" ondragover="allowDrop(event)">
+                    <img src={{ list_data.image3 }} draggable="true" ondragstart="drag(event)"
+                         id="drag14" width="88"
+                         height="31" alt="{{ list_data.option3 }}">
+                </div>
+                <label>{{ list_data.option3 }}</label>
+            </div>
+            <div>
+                <div id="div15" ondrop="drop15(event)" ondragover="allowDrop(event)">
+                    <img src={{ list_data.image4 }} draggable="true" ondragstart="drag(event)" id="drag15"
+                         width="88"
+                         height="31" alt="{{ list_data.option4 }}">
+                </div>
+                <label>{{ list_data.option4 }}</label>
+            </div>
+            <div>
+                <div id="div16" ondrop="drop16(event)" ondragover="allowDrop(event)">
+                    <img src={{ list_data.image5 }} draggable="true" ondragstart="drag(event)" id="drag16"
+                         width="88"
+                         height="31" alt="{{ list_data.option5 }}">
+                </div>
+                <label>{{ list_data.option5 }}</label>
+            </div>
         </div>
 
-        <br>
         <input type=hidden id="abcId" class="form-control" name="abcName"
                value={{ flag_data }}/>
 
-        <div class="container">
-            <div class="sidebyside">
-                <select id="option1" class="form-control" required>
-                    <option disabled selected value="">Select your option1</option>
-                    <option>{{ list_data.option0 }}</option>
-                    <option>{{ list_data.option1 }}</option>
-                    <option>{{ list_data.option2 }}</option>
-                    <option>{{ list_data.option3 }}</option>
-                    <option>{{ list_data.option4 }}</option>
-                    <option>{{ list_data.option5 }}</option>
-                    <option>{{ list_data.option6 }}</option>
-                </select>
-            </div>
-            <div class="sidebyside">
-                <select id="option2" class="form-control" required>
-                    <option disabled selected value="">Select your option2</option>
-                    <option>{{ list_data.option0 }}</option>
-                    <option>{{ list_data.option1 }}</option>
-                    <option>{{ list_data.option2 }}</option>
-                    <option>{{ list_data.option3 }}</option>
-                    <option>{{ list_data.option4 }}</option>
-                    <option>{{ list_data.option5 }}</option>
-                    <option>{{ list_data.option6 }}</option>
-                </select>
-            </div>
-            <div class="sidebyside">
-                <select id="option3" class="form-control" required>
-                    <option disabled selected value="">Select your option3</option>
-                    <option>{{ list_data.option0 }}</option>
-                    <option>{{ list_data.option1 }}</option>
-                    <option>{{ list_data.option2 }}</option>
-                    <option>{{ list_data.option3 }}</option>
-                    <option>{{ list_data.option4 }}</option>
-                    <option>{{ list_data.option5 }}</option>
-                    <option>{{ list_data.option6 }}</option>
-                </select>
-            </div>
-        </div>
 
     </div>
 
-    <br><br>
+    <div class="progress">
+        <div class="progress-bar progress-bar-striped active" id="progress-bar" role="progressbar" aria-valuenow="0"
+             aria-valuemin="0" aria-valuemax="100" style="width: {{progressdata}}%;">
+        </div>
+    </div>
+
     <div class="row">
         <div class="form-group text-center col-sm-2 col-sm-offset-5">
             <input type="submit" class="form-control form-control-lg" name="submit" value="Next" id="next_btn"/>

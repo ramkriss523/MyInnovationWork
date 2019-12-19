@@ -9,45 +9,40 @@
     <style>
 
 body {
-	    background-image: url("{% static 'ericssionbg.jpg' %}");
         background-repeat:no-repeat;
         background-size:cover;
         height:100%;
         display:table; width:100%;
         text-align:center; vertical-align:middle;
-         align:center;
+        align:center;
+        background-color: white;
      }
 
     h1{
-        color: white;
-   }
+        color: black;
+      }
 
    h2,h4 {
-     color: white;
+     color: black;
      align: left;
 }
 
-   table {
+table {
   margin: 2cm;
 }
 
 form { display: inline-block; }
 
 td {
-color: white;
+color: black;
 text-align: left;
 padding: 0.5cm;
-}
-
-img {
-width: 200px;
-height: 100px;
 }
 
  .img-circular{
  width: 200px;
  height: 200px;
- background-image: url('https://www.ericsson.com/assets/global/scaled/borje-ekholm-170118_0217-1_594x591_90_237869.jpg');
+ background-image:url("{% static 'ericssonlogo.jpg' %}");
 background-size: cover;
  display: block;
   margin-left: auto;
@@ -58,6 +53,37 @@ background-size: cover;
  -moz-border-radius: 100px;
 
 }
+
+#div21, #div22, #div23 {
+  width: 160px;
+  height: 120px;
+   margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  display: block;
+  padding: 10px;
+  border: 2px solid black;
+}
+
+img{
+width: 120px;
+height: 100px;
+}
+
+#div11, #div12, #div13, #div14, #div15, #div16 {
+ margin: auto;
+   width: 160px;
+  height: 120px;
+  padding: 10px;
+display: block;
+border: 1px solid black;
+}
+
+label{
+ width: 160px;
+ height: 60px;
+}
+
 
     </style>
 </head>
