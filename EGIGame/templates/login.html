@@ -4,12 +4,17 @@
     {% csrf_token %}
     <br><br>
     <h1>Welcome to EGI Game!!!!!!!</h1>
-<br><br>
-    <input type="file" style="display: none" />
+    <br><br>
+    <input type="file" style="display: none"/>
     <div class="img-circular" style="display: none">
     </div>
-     <input type="text" class="form-control" name="fullname" placeholder="Full Name" maxlength="50" required><br><br>
-     <input type="text" class="form-control" name="signumname" placeholder="Signum" maxlength="7" required><br><br>
+    {% if registered %}
+    <div class="alert alert-danger">
+        <strong>Hey Buddy!! </strong> You already finished your chance.
+    </div><br>
+    {% endif %}
+    <input type="text" class="form-control" name="fullname" placeholder="Full Name" maxlength="50" required><br><br>
+    <input type="text" class="form-control" name="signumname" placeholder="Signum" maxlength="7" required><br><br>
     <input class="btn btn-primary" type="submit" value="Submit" id="login_button" name="log_in">
 </form>
 {% endblock %}

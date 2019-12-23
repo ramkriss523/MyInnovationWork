@@ -110,8 +110,22 @@ def index(request):
     return render(request, 'login.html', {'registered': False})
 
 
-def dashboard(request):
-    if request.method == 'POST':
+# DashPageView
+class DashPageView(TemplateView):
+    template_name = "dashboard.html"
+
+    # modeldata = QuestionData
+
+    def get(self, request, **kwargs):
+        # print(int_data)
+        # form = LocationForm()
+        if dbdata.UserData.objects.filter(signum=data_signum).exists():
+            return render(request, 'login.html', {'registered': True})
+        else:
+            return render(request, self.template_name,
+                          {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
+
+    def post(self, request, **kwargs):
         global data_signum
         data_signum = request.POST.get("signumname")
         global data_fullname
@@ -140,37 +154,26 @@ def dashboard(request):
         }
 
         if dbdata.UserData.objects.filter(signum=data_signum).exists():
-            print(True)
             return render(request, 'login.html', {'registered': True})
-        # else:
-        #     dbdata.UserData = dbdata.UserData(fullname=request.POST['fullname'], signum=request.POST['signumname'])
-        #     dbdata.UserData.save()
+        else:
+            dic_data = {
+                'question': entry_list[int_data].question,
+                'option0': entry_list[int_data].option1,
+                'option1': entry_list[int_data].option2,
+                'option2': entry_list[int_data].option3,
+                'option3': entry_list[int_data].option4,
+                'option4': entry_list[int_data].option5,
+                'option5': entry_list[int_data].option6,
+                'image0': entry_list[int_data].image1.url,
+                'image1': entry_list[int_data].image2.url,
+                'image2': entry_list[int_data].image3.url,
+                'image3': entry_list[int_data].image4.url,
+                'image4': entry_list[int_data].image5.url,
+                'image5': entry_list[int_data].image6.url,
+            }
 
-    return render(request, "dashboard.html",
-                  {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
-
-    # return render(request, "dashboard.html", {'loggeduser': data_fullname})
-    # if request.method == 'POST':
-    #     print('in')
-    #
-    # else:
-    #     print('else')
-    #     return render(request, "dashboard.html", {'loggeduser': data_fullname})
-
-    # data_signum = request.POST['signumname']
-    # data_fullname = request.POST['fullname']
-
-    # print(data_signum)
-    # ls = dbdata.UserData.objects.all()
-    #
-    # for i in ls:
-    #     print(i.signum)
-
-    # if ls.contains(data_signum):
-    #     messages.success(request, 'You are are already tried!')
-    # else:
-    #     dbdata.UserData = dbdata.UserData(fullname=request.POST['fullname'], signum=request.POST['signumname'])
-    #     dbdata.UserData.save()
+            return render(request, self.template_name,
+                          {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
 
 
 def question(request):

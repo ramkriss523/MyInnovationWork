@@ -28,7 +28,7 @@ return false;
 //Signum Validation ---------
 function signumValidation(signum)
 {
-if(signum.value.startsWith("e") && signum.value.length==7)
+if(signum.value.toLowerCase().startsWith("e") && signum.value.length==7)
 {
 return true;
 }
