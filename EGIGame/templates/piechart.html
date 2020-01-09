@@ -11,7 +11,7 @@
 {% load static %}
 	<h1 align="center">{{ loggeduser }}</h1>
 	<div id="chart-1">{{ output|safe }}</div>
-	<div id="chart-2">{{ output_2|safe }}</div>
+	<img src="data:image/png;base64,{{ graphic|safe }}">
 	<br/>
 	<a href="/">Back</a>
 </body>

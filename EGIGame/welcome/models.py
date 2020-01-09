@@ -5,12 +5,12 @@ from django.db import models
 class UserData(models.Model):
     fullname = models.CharField(max_length=50)
     signum = models.CharField(max_length=10, primary_key=True)
-    achiever = models.CharField(max_length=100, default="")
-    philanthropist = models.CharField(max_length=100, default="")
-    disruptor = models.CharField(max_length=100, default="")
-    socializer = models.CharField(max_length=100, default="")
-    player = models.CharField(max_length=100, default="")
-    freespirit = models.CharField(max_length=100, default="")
+    WhizzKid = models.CharField(max_length=100, default="")
+    Humanitarian = models.CharField(max_length=100, default="")
+    Reformer = models.CharField(max_length=100, default="")
+    Socialite = models.CharField(max_length=100, default="")
+    Sportsperson = models.CharField(max_length=100, default="")
+    Individualist = models.CharField(max_length=100, default="")
 
 
 class QuestionData(models.Model):

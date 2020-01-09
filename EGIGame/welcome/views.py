@@ -2,11 +2,9 @@ from django.shortcuts import render
 from . import models as dbdata
 from .models import UserData
 
-from .models import QuestionData
-
+import smtplib, ssl
 from .fusioncharts import FusionCharts
 from django.views.generic import TemplateView
-from .forms import LocationForm
 
 # Create your views here.
 
@@ -19,12 +17,13 @@ int_data = 0
 choice1 = None
 choice2 = None
 choice3 = None
+buf = None
 
 dic_finaldata = {}
 
 progressflagval = 14
 
-commondata = ['Achiever', 'Philanthropist', 'Disruptor', 'Socializer', 'Player', 'Free Spirit']
+commondata = ['Whizz-Kid', 'Humanitarian', 'Reformer', 'Socialite', 'Sportsperson', 'Individualist']
 
 
 # Class Based View for Questionaries
@@ -107,7 +106,26 @@ def index(request):
     progressflagval = 14
     int_data = 0
     user_data = UserData()
+
+    # email_send()
     return render(request, 'login.html', {'registered': False})
+
+
+def email_send():
+    port = 465  # For SSL
+    smtp_server = "smtp.gmail.com"
+    sender_email = "ramkrisscse@gmail.com"  # Enter your address
+    receiver_email = "ramkriss523@gmail.com"  # Enter receiver address
+    password = "pa55w0rd!@#"
+    message = """\
+    Subject: Hi there
+
+    This message is sent from Python."""
+
+    context = ssl.create_default_context()
+    with smtplib.SMTP_SSL(smtp_server, port, context=context) as server:
+        server.login(sender_email, password)
+        server.sendmail(sender_email, receiver_email, message)
 
 
 # DashPageView
@@ -120,7 +138,7 @@ class DashPageView(TemplateView):
         # print(int_data)
         # form = LocationForm()
         if dbdata.UserData.objects.filter(signum=data_signum).exists():
-            return render(request, 'login.html', {'registered': True})
+            return render(request, 'login.html', {'registered': True, "final_data": dic_data})
         else:
             return render(request, self.template_name,
                           {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
@@ -154,7 +172,17 @@ class DashPageView(TemplateView):
         }
 
         if dbdata.UserData.objects.filter(signum=data_signum).exists():
-            return render(request, 'login.html', {'registered': True})
+            find_list = dbdata.UserData.objects.get(signum=data_signum)
+
+            dic_data = {
+                'data0': find_list.WhizzKid,
+                'data1': find_list.Humanitarian,
+                'data2': find_list.Reformer,
+                'data3': find_list.Socialite,
+                'data4': find_list.Sportsperson,
+                'data5': find_list.Individualist,
+            }
+            return render(request, 'login.html', {'registered': True, "final_data": dic_data})
         else:
             dic_data = {
                 'question': entry_list[int_data].question,
@@ -193,7 +221,6 @@ def chart(request):
         choice2 = request.POST.get("choice2")
         choice3 = request.POST.get("choice3")
 
-        print(choice1 + choice2 + choice3)
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice1)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice1)) - 1], 0) + 100
 
@@ -203,12 +230,12 @@ def chart(request):
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice3)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice3)) - 1], 0) + 20
 
-        user_data = UserData(data_fullname, data_signum, str(dic_finaldata.get('Achiever', 0)),
-                             str(dic_finaldata.get('Philanthropist', 0)),
-                             str(dic_finaldata.get('Disruptor', 0)),
-                             str(dic_finaldata.get('Socializer', 0)),
-                             str(dic_finaldata.get('Player', 0)),
-                             str(dic_finaldata.get('Free Spirit', 0)))
+        user_data = UserData(data_fullname, data_signum, str(dic_finaldata.get('Whizz-Kid', 0)),
+                             str(dic_finaldata.get('Humanitarian', 0)),
+                             str(dic_finaldata.get('Reformer', 0)),
+                             str(dic_finaldata.get('Socialite', 0)),
+                             str(dic_finaldata.get('Sportsperson', 0)),
+                             str(dic_finaldata.get('Individualist', 0)))
         user_data.save()
 
     pie3d = FusionCharts("pie3d", "ex2", "100%", "400", "chart-1", "json",
@@ -224,25 +251,62 @@ def chart(request):
                                  "theme": "fusion"
                              },
                              "data": [{
-                                 "label": "Achiever",
-                                 "value": """ + str(dic_finaldata.get('Achiever', 0)) + """
+                                 "label": "Whizz-Kid",
+                                 "value": """ + str(dic_finaldata.get('Whizz-Kid', 0)) + """
                                  
                              }, {
-                                 "label": "Philanthropist",
-                                 "value": """ + str(dic_finaldata.get('Philanthropist', 0)) + """
+                                 "label": "Humanitarian",
+                                 "value": """ + str(dic_finaldata.get('Humanitarian', 0)) + """
                              }, {
-                                 "label": "Disruptor",
-                                 "value": """ + str(dic_finaldata.get('Disruptor', 0)) + """
+                                 "label": "Reformer",
+                                 "value": """ + str(dic_finaldata.get('Reformer', 0)) + """
                              }, {
-                                 "label": "Socializer",
-                                 "value": """ + str(dic_finaldata.get('Socializer', 0)) + """
+                                 "label": "Socialite",
+                                 "value": """ + str(dic_finaldata.get('Socialite', 0)) + """
                              }, {
-                                 "label": "Player",
-                                 "value": """ + str(dic_finaldata.get('Player', 0)) + """
+                                 "label": "Sportsperson",
+                                 "value": """ + str(dic_finaldata.get('Sportsperson', 0)) + """
                              }, {
-                                 "label": "Free Spirit",
-                                 "value": """ + str(dic_finaldata.get('Free Spirit', 0)) + """
+                                 "label": "Individualist",
+                                 "value": """ + str(dic_finaldata.get('Individualist', 0)) + """
                              }]
                          }""")
 
-    return render(request, 'piechart.html', {'output': pie3d.render(), 'loggeduser': data_fullname})
+    # pos = np.arange(10) + 2
+    #
+    # fig = plt.figure(figsize=(8, 3))
+    # ax = fig.add_subplot(111)
+    #
+    # ax.barh(pos, np.arange(1, 11), align='center')
+    # ax.set_yticks(pos)
+    # ax.set_yticklabels(('#hcsm',
+    #                     '#ukmedlibs',
+    #                     '#ImmunoChat',
+    #                     '#HCLDR',
+    #                     '#ICTD2015',
+    #                     '#hpmglobal',
+    #                     '#BRCA',
+    #                     '#BCSM',
+    #                     '#BTSM',
+    #                     '#OTalk',),
+    #                    fontsize=15)
+    # ax.set_xticks([])
+    # ax.invert_yaxis()
+    #
+    # ax.set_xlabel('Popularity')
+    # ax.set_ylabel('Hashtags')
+    # ax.set_title('Hashtags')
+    #
+    # plt.tight_layout()
+    #
+    # buffer = BytesIO()
+    # plt.savefig(buffer, format='png')
+    # buffer.seek(0)
+    # image_png = buffer.getvalue()
+    # buffer.close()
+    #
+    # graphic = base64.b64encode(image_png)
+    # graphic = graphic.decode('utf-8')
+
+    return render(request, 'piechart.html',
+                  {'output': pie3d.render(), 'loggeduser': data_fullname})

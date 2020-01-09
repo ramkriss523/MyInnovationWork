@@ -11,10 +11,35 @@
     {% if registered %}
     <div class="alert alert-danger">
         <strong>Hey Buddy!! </strong> You already finished your chance.
-    </div><br>
+    </div>
+    <br>
     {% endif %}
     <input type="text" class="form-control" name="fullname" placeholder="Full Name" maxlength="50" required><br><br>
     <input type="text" class="form-control" name="signumname" placeholder="Signum" maxlength="7" required><br><br>
     <input class="btn btn-primary" type="submit" value="Submit" id="login_button" name="log_in">
+
+    <br>
+
+    {% if registered %}
+    <table style="width:100%">
+        <tr>
+            <th>Whizz-Kid</th>
+            <th>Humanitarian</th>
+            <th>Reformer</th>
+            <th>Socialite</th>
+            <th>Sportsperson</th>
+            <th>Individualist</th>
+        </tr>
+        <tr>
+            <td>{{ final_data.data0 }}%</td>
+            <td>{{ final_data.data1 }}%</td>
+            <td>{{ final_data.data2 }}%</td>
+            <td>{{ final_data.data3 }}%</td>
+            <td>{{ final_data.data4 }}%</td>
+            <td>{{ final_data.data5 }}%</td>
+        </tr>
+    </table>
+    {% endif %}
+
 </form>
 {% endblock %}

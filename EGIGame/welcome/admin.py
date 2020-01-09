@@ -7,7 +7,7 @@ from .models import UserData, QuestionData
 
 @admin.register(UserData)
 class UserData(admin.ModelAdmin):
-    list_display = ('fullname', 'signum', 'achiever', 'philanthropist', 'disruptor', 'socializer', 'player', 'freespirit')
+    list_display = ('fullname', 'signum', 'WhizzKid', 'Humanitarian', 'Reformer', 'Socialite', 'Sportsperson', 'Individualist')
 
 
 # admin.site.register(QuestionData)
