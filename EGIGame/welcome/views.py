@@ -10,6 +10,8 @@ from django.views.generic import TemplateView
 
 data_fullname = None
 data_signum = None
+data_email = None
+data_gender = None
 ls = None
 entry_list = None
 dic_data = None
@@ -151,6 +153,11 @@ class DashPageView(TemplateView):
         global ls
         global entry_list
         global dic_data
+
+        global data_email
+        data_email = request.POST.get("email")
+        global data_gender
+        data_gender = request.POST.get("gender")
 
         ls = dbdata.QuestionData.objects.all()
         entry_list = list(dbdata.QuestionData.objects.all())
