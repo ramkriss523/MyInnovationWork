@@ -12,6 +12,7 @@ data_fullname = None
 data_signum = None
 data_email = None
 data_gender = None
+data_exp = None
 ls = None
 entry_list = None
 dic_data = None
@@ -159,6 +160,11 @@ class DashPageView(TemplateView):
         global data_gender
         data_gender = request.POST.get("gender")
 
+        global data_exp
+        data_exp = request.POST.get("exp")
+
+        print(data_exp)
+
         ls = dbdata.QuestionData.objects.all()
         entry_list = list(dbdata.QuestionData.objects.all())
 
@@ -242,7 +248,7 @@ def chart(request):
                              str(dic_finaldata.get('Reformer', 0)),
                              str(dic_finaldata.get('Socialite', 0)),
                              str(dic_finaldata.get('Sportsperson', 0)),
-                             str(dic_finaldata.get('Individualist', 0)))
+                             str(dic_finaldata.get('Individualist', 0)),data_email,data_gender, data_exp)
         user_data.save()
 
     pie3d = FusionCharts("pie3d", "ex2", "100%", "400", "chart-1", "json",
@@ -250,7 +256,7 @@ def chart(request):
                          """{
                              "chart": {
                                  "caption": "Recommended Portfolio Split",
-                                 "subCaption" : "For a net-worth of $1M",
+                                 "subCaption" : "",
                                  "showValues":"1",
                                  "showPercentInTooltip" : "0",
                                  "numberPrefix" : "",

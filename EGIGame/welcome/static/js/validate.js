@@ -40,15 +40,28 @@ return false;
 }
 }
 
+function validateEmail(email) {
+  var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return re.test(email);
+}
+
+var manageradiorel = "";
+
 //Login Form submit click---------------
  $("#login_form").submit(function(e){
        e.preventDefault();
+       manageradiorel = $("input:radio[name ='gender']:checked").val();
+
        if(allLetter(document.forms["login_form"]["fullname"])){
        if(signumValidation(document.forms["login_form"]["signumname"])){
+
         $.post("/quiz/dashboard/",
            {
                fullname : document.forms["login_form"]["fullname"].value,
                signumname : document.forms["login_form"]["signumname"].value,
+               email : document.forms["login_form"]["email"].value,
+               gender : manageradiorel,
+               exp : document.forms["login_form"]["exp"].value,
                csrfmiddlewaretoken : document.forms["login_form"]["csrfmiddlewaretoken"].value
            },
            function(data,status)

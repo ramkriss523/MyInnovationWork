@@ -11,6 +11,9 @@ class UserData(models.Model):
     Socialite = models.CharField(max_length=100, default="")
     Sportsperson = models.CharField(max_length=100, default="")
     Individualist = models.CharField(max_length=100, default="")
+    email = models.CharField(max_length=100, default="")
+    gender = models.CharField(max_length=100, default="")
+    exp = models.CharField(max_length=100, default="")
 
 
 class QuestionData(models.Model):
