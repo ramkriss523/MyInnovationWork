@@ -1,10 +1,12 @@
 from django.shortcuts import render
 from . import models as dbdata
 from .models import UserData
+import numpy as np
 
 import smtplib, ssl
 from .fusioncharts import FusionCharts
 from django.views.generic import TemplateView
+import pickle
 
 # Create your views here.
 
@@ -22,11 +24,14 @@ choice2 = None
 choice3 = None
 buf = None
 
+data_final_gender = None
+
 dic_finaldata = {}
 
 progressflagval = 14
 
 commondata = ['Whizz-Kid', 'Humanitarian', 'Reformer', 'Socialite', 'Sportsperson', 'Individualist']
+model = pickle.load(open('C:\\Users\\eyalram\\Desktop\\EGIGame\\model.pkl', 'rb'))
 
 
 # Class Based View for Questionaries
@@ -42,7 +47,7 @@ class HomePageView(TemplateView):
             return render(request, 'piechart.html')
         else:
             return render(request, self.template_name,
-                          {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data,
+                          {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data,
                            'progressdata': progressflagval})
 
     def post(self, request, **kwargs):
@@ -97,7 +102,7 @@ class HomePageView(TemplateView):
             }
 
             return render(request, self.template_name,
-                          {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data,
+                          {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data,
                            'progressdata': progressflagval})
 
 
@@ -109,6 +114,13 @@ def index(request):
     progressflagval = 14
     int_data = 0
     user_data = UserData()
+
+    int_features = [7,40,50]
+    final_features = [np.array(int_features)]
+    prediction = model.predict(final_features)
+
+    output = round(prediction[0], 2)
+    print('Employee Salary should be $ {}'.format(output))
 
     # email_send()
     return render(request, 'login.html', {'registered': False})
@@ -144,7 +156,7 @@ class DashPageView(TemplateView):
             return render(request, 'login.html', {'registered': True, "final_data": dic_data})
         else:
             return render(request, self.template_name,
-                          {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
+                          {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data})
 
     def post(self, request, **kwargs):
         global data_signum
@@ -163,7 +175,13 @@ class DashPageView(TemplateView):
         global data_exp
         data_exp = request.POST.get("exp")
 
-        print(data_exp)
+        global data_final_gender
+        if data_gender == "male":
+            data_final_gender = "Mr. "+data_fullname
+        else:
+            data_final_gender = "Ms. " + data_fullname
+
+        print(data_gender)
 
         ls = dbdata.QuestionData.objects.all()
         entry_list = list(dbdata.QuestionData.objects.all())
@@ -214,11 +232,11 @@ class DashPageView(TemplateView):
             }
 
             return render(request, self.template_name,
-                          {'loggeduser': data_fullname, 'list_data': dic_data, 'flag_data': int_data})
+                          {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data})
 
 
 def question(request):
-    return render(request, "question.html", {'loggeduser': data_fullname})
+    return render(request, "question.html", {'loggeduser': data_final_gender})
 
 
 # Create an object for the pie3d chart using the FusionCharts class constructor
@@ -322,4 +340,4 @@ def chart(request):
     # graphic = graphic.decode('utf-8')
 
     return render(request, 'piechart.html',
-                  {'output': pie3d.render(), 'loggeduser': data_fullname})
+                  {'output': pie3d.render(), 'loggeduser': data_final_gender})

@@ -9,6 +9,7 @@
     <style>
 
 body {
+         background-image:url("{% static 'newbg.jpg' %}");
         background-repeat:no-repeat;
         background-size:cover;
         height:100%;
@@ -19,11 +20,11 @@ body {
      }
 
     h1{
-        color: black;
+        color: white;
       }
 
    h2,h4 {
-     color: black;
+     color: white;
      align: left;
 }
 
@@ -37,7 +38,7 @@ form { display: inline-block; }
 
 td,th {
 border: 1px solid red;
-color: black;
+color: white;
 text-align: center;
 padding: 0.5cm;
 }
@@ -65,7 +66,7 @@ background-size: cover;
   margin-bottom: 20px;
   display: block;
   padding: 10px;
-  border: 2px solid black;
+  border: 2px solid white;
 }
 
 img{
@@ -79,23 +80,46 @@ height: 100px;
   height: 120px;
   padding: 10px;
 display: block;
-border: 1px solid black;
+border: 1px solid white;
 }
 
 label{
  width: 160px;
  height: 60px;
+ color: white;
 }
 
-.standard_label_style { color: red;
+.labelgender{
+color: white;
+}
+
+.standard_label_style { color: white;
      width: 160px;
      height: 30px;
  }
 
+ .topright {
+  position: absolute;
+  top: 8px;
+  right: 16px;
+  font-size: 18px;
+}
+
+.topleft {
+  position: absolute;
+  top: 8px;
+  left: 16px;
+  font-size: 18px;
+  width: 110px;
+  height: 80px;
+  margin-left: 25px;
+  margin-top: 25px;
+}
+
     </style>
 </head>
 <body>
-
+<img src="{% static 'newericssonlogo.png'%}" alt="W3Schools.com" class="topleft"/>
 {% block content %}
 
 {% endblock %}

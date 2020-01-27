@@ -131,7 +131,7 @@ function drop1(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById("div21").childNodes.length == 0){
-     document.getElementById("div21").style["border"] = "2px solid black";
+     document.getElementById("div21").style["border"] = "2px solid white";
     val1 = document.getElementById(data).alt;
   ev.target.appendChild(document.getElementById(data));
 
@@ -142,7 +142,7 @@ function drop2(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById("div22").childNodes.length == 0){
-   document.getElementById("div22").style["border"] = "2px solid black";
+   document.getElementById("div22").style["border"] = "2px solid white";
   val2 = document.getElementById(data).alt;
   ev.target.appendChild(document.getElementById(data));
  }
@@ -152,7 +152,7 @@ function drop3(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById("div23").childNodes.length == 0){
-   document.getElementById("div23").style["border"] = "2px solid black";
+   document.getElementById("div23").style["border"] = "2px solid white";
   val3 = document.getElementById(data).alt;
   ev.target.appendChild(document.getElementById(data));
   }

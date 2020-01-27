@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <head>
 	<title>EGI Game!!!</title>
@@ -6,9 +7,21 @@
    <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/fusioncharts.js"></script>
    <script type="text/javascript" src="//cdn.fusioncharts.com/fusioncharts/latest/themes/fusioncharts.theme.fusion.js"></script>
 
+	 <style>
+	 .topleft {
+  position: absolute;
+  top: 8px;
+  left: 10px;
+  width: 130px;
+  height: 50px;
+  margin-left: 15px;
+  margin-top: 15px;
+}
+	 </style>
 </head>
 <body style="font-family:'Helvetica Neue', Arial; font-size: 16px;">
-{% load static %}
+
+<img src="{% static 'ericssonlogo.png'%}" alt="Ericcson.com" class="topleft"/>
 	<h1 align="center">{{ loggeduser }}</h1>
 	<div id="chart-1">{{ output|safe }}</div>
 	<br/>
