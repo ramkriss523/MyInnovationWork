@@ -2,14 +2,27 @@ from django.shortcuts import render
 from . import models as dbdata
 from .models import UserData
 import numpy as np
+import json
 
 import smtplib, ssl
 from .fusioncharts import FusionCharts
 from django.views.generic import TemplateView
 import pickle
 
-# Create your views here.
+import socket
+import sys
+from predict import Predict
+import re
+import base64
+from PIL import Image
+import cv2
+import io
+from camera_image import get_frame
 
+dataUrlPattern = re.compile('data:image/png;base64,(.*)$')
+
+# Create your views here.
+list_emotions = []
 data_fullname = None
 data_signum = None
 data_email = None
@@ -23,15 +36,20 @@ choice1 = None
 choice2 = None
 choice3 = None
 buf = None
+arydata = None
+arydata1 = None
 
 data_final_gender = None
 
 dic_finaldata = {}
+dic_totaldata = {}
 
 progressflagval = 14
 
 commondata = ['Whizz-Kid', 'Humanitarian', 'Reformer', 'Socialite', 'Sportsperson', 'Individualist']
-model = pickle.load(open('C:\\Users\\eyalram\\Desktop\\EGIGame\\model.pkl', 'rb'))
+'''model = pickle.load(open('C:\\Users\\eyalram\\Desktop\\EGIGame\\model.pkl', 'rb'))'''
+
+emotions = []
 
 
 # Class Based View for Questionaries
@@ -41,6 +59,7 @@ class HomePageView(TemplateView):
     # modeldata = QuestionData
 
     def get(self, request, **kwargs):
+
         # print(int_data)
         # form = LocationForm()
         if int_data == 7:
@@ -59,6 +78,23 @@ class HomePageView(TemplateView):
         global choice2
         global choice3
         global progressflagval
+        # retrive image from canvas
+        ImageData = request.POST.get("image")
+        ImageData = dataUrlPattern.match(ImageData).group(1)
+
+        # If none or len 0, means illegal image data
+        if (ImageData == None or len(ImageData) == 0):
+            print("error")
+
+        # Decode the 64 bit string into 32 bit
+        imgdata = base64.b64decode(str(ImageData))
+        image = Image.open(io.BytesIO(imgdata))
+        image = cv2.cvtColor(np.array(image), cv2.COLOR_BGR2RGB)
+
+        #######################################
+        list_emotions.append(get_frame(image))
+        print(list_emotions)
+        #######################################
 
         choice1 = request.POST.get("choice1")
         choice2 = request.POST.get("choice2")
@@ -100,7 +136,6 @@ class HomePageView(TemplateView):
                 'image4': entry_list[int_data].image5.url,
                 'image5': entry_list[int_data].image6.url,
             }
-
             return render(request, self.template_name,
                           {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data,
                            'progressdata': progressflagval})
@@ -115,12 +150,12 @@ def index(request):
     int_data = 0
     user_data = UserData()
 
-    int_features = [7,40,50]
+    '''int_features = [7,40,50]
     final_features = [np.array(int_features)]
     prediction = model.predict(final_features)
 
     output = round(prediction[0], 2)
-    print('Employee Salary should be $ {}'.format(output))
+    print('Employee Salary should be $ {}'.format(output))'''
 
     # email_send()
     return render(request, 'login.html', {'registered': False})
@@ -177,7 +212,7 @@ class DashPageView(TemplateView):
 
         global data_final_gender
         if data_gender == "male":
-            data_final_gender = "Mr. "+data_fullname
+            data_final_gender = "Mr. " + data_fullname
         else:
             data_final_gender = "Ms. " + data_fullname
 
@@ -230,7 +265,6 @@ class DashPageView(TemplateView):
                 'image4': entry_list[int_data].image5.url,
                 'image5': entry_list[int_data].image6.url,
             }
-
             return render(request, self.template_name,
                           {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data})
 
@@ -247,6 +281,7 @@ def chart(request):
         global choice2
         global choice3
         global dic_finaldata
+        global arydata
 
         choice1 = request.POST.get("choice1")
         choice2 = request.POST.get("choice2")
@@ -266,78 +301,37 @@ def chart(request):
                              str(dic_finaldata.get('Reformer', 0)),
                              str(dic_finaldata.get('Socialite', 0)),
                              str(dic_finaldata.get('Sportsperson', 0)),
-                             str(dic_finaldata.get('Individualist', 0)),data_email,data_gender, data_exp)
+                             str(dic_finaldata.get('Individualist', 0)), data_email, data_gender, data_exp)
         user_data.save()
 
-    pie3d = FusionCharts("pie3d", "ex2", "100%", "400", "chart-1", "json",
-                         # The data is passed as a string in the `dataSource` as parameter.
-                         """{
-                             "chart": {
-                                 "caption": "Recommended Portfolio Split",
-                                 "subCaption" : "",
-                                 "showValues":"1",
-                                 "showPercentInTooltip" : "0",
-                                 "numberPrefix" : "",
-                                 "enableMultiSlicing":"1",
-                                 "theme": "fusion"
-                             },
-                             "data": [{
-                                 "label": "Whizz-Kid",
-                                 "value": """ + str(dic_finaldata.get('Whizz-Kid', 0)) + """
-                                 
-                             }, {
-                                 "label": "Humanitarian",
-                                 "value": """ + str(dic_finaldata.get('Humanitarian', 0)) + """
-                             }, {
-                                 "label": "Reformer",
-                                 "value": """ + str(dic_finaldata.get('Reformer', 0)) + """
-                             }, {
-                                 "label": "Socialite",
-                                 "value": """ + str(dic_finaldata.get('Socialite', 0)) + """
-                             }, {
-                                 "label": "Sportsperson",
-                                 "value": """ + str(dic_finaldata.get('Sportsperson', 0)) + """
-                             }, {
-                                 "label": "Individualist",
-                                 "value": """ + str(dic_finaldata.get('Individualist', 0)) + """
-                             }]
-                         }""")
+        global ls
+        global entry_list
+        global arydata1
 
-    # pos = np.arange(10) + 2
-    #
-    # fig = plt.figure(figsize=(8, 3))
-    # ax = fig.add_subplot(111)
-    #
-    # ax.barh(pos, np.arange(1, 11), align='center')
-    # ax.set_yticks(pos)
-    # ax.set_yticklabels(('#hcsm',
-    #                     '#ukmedlibs',
-    #                     '#ImmunoChat',
-    #                     '#HCLDR',
-    #                     '#ICTD2015',
-    #                     '#hpmglobal',
-    #                     '#BRCA',
-    #                     '#BCSM',
-    #                     '#BTSM',
-    #                     '#OTalk',),
-    #                    fontsize=15)
-    # ax.set_xticks([])
-    # ax.invert_yaxis()
-    #
-    # ax.set_xlabel('Popularity')
-    # ax.set_ylabel('Hashtags')
-    # ax.set_title('Hashtags')
-    #
-    # plt.tight_layout()
-    #
-    # buffer = BytesIO()
-    # plt.savefig(buffer, format='png')
-    # buffer.seek(0)
-    # image_png = buffer.getvalue()
-    # buffer.close()
-    #
-    # graphic = base64.b64encode(image_png)
-    # graphic = graphic.decode('utf-8')
+        ls = dbdata.UserData.objects.all()
+        for i in ls:
+            dic_totaldata["Whizz-Kid"] = dic_totaldata.get("Whizz-Kid", 0) + int(i.WhizzKid)
+            dic_totaldata["Humanitarian"] = dic_totaldata.get("Humanitarian", 0) + int(i.Humanitarian)
+            dic_totaldata["Reformer"] = dic_totaldata.get("Reformer", 0) + int(i.Reformer)
+            dic_totaldata["Socialite"] = dic_totaldata.get("Socialite", 0) + int(i.Socialite)
+            dic_totaldata["Sportsperson"] = dic_totaldata.get("Sportsperson", 0) + int(i.Sportsperson)
+            dic_totaldata["Individualist"] = dic_totaldata.get("Individualist", 0) + int(i.Individualist)
 
-    return render(request, 'piechart.html',
-                  {'output': pie3d.render(), 'loggeduser': data_final_gender})
+        arydata1 = [['Task', 'Hours per Day'],
+                   ["Whizz-Kid", dic_totaldata.get('Whizz-Kid', 0)],
+                   ['Humanitarian', dic_totaldata.get('Humanitarian', 0)],
+                   ['Reformer', dic_totaldata.get('Reformer', 0)],
+                   ['Socialite', dic_totaldata.get('Socialite', 0)],
+                   ['Sportsperson', dic_totaldata.get('Sportsperson', 0)],
+                   ['Individualist', dic_totaldata.get('Individualist', 0)]]
+
+        arydata = [['Task', 'Hours per Day'],
+                   ["Whizz-Kid", dic_finaldata.get('Whizz-Kid', 0)],
+                   ['Humanitarian', dic_finaldata.get('Humanitarian', 0)],
+                   ['Reformer', dic_finaldata.get('Reformer', 0)],
+                   ['Socialite', dic_finaldata.get('Socialite', 0)],
+                   ['Sportsperson', dic_finaldata.get('Sportsperson', 0)],
+                   ['Individualist', dic_finaldata.get('Individualist', 0)]]
+
+    return render(request, 'piechart1.html',
+                  {'array': json.dumps(arydata),'array1': json.dumps(arydata1), 'loggeduser': data_final_gender})

@@ -18,7 +18,7 @@ from django.conf.urls import include, url
 from welcome import views
 from django.conf import settings
 from django.conf.urls.static import static
-
+admin.autodiscover()
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^quiz/', include('welcome.urls')),

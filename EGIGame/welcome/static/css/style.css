@@ -12,10 +12,7 @@
             padding-left: 10%;
             font-size: large;
         }
-        #login_button{
-            background-color: white;
-            color: blue;
-        }
+
         #login_form{
             padding-right: 10px;
         }
@@ -39,3 +36,5 @@
         .sidebyside {
              flex: 1 1 0px;
         }
+
+

@@ -2,29 +2,29 @@
 {% load static %}
 <html lang="en">
 <head>
-    <title>EGI Game!!!</title>
+    <title>Chaitanya</title>
 
     <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet" type="text/css"/>
     <link href="{% static 'css/style.css' %}" rel="stylesheet" type="text/css"/>
     <style>
 
 body {
-         background-image:url("{% static 'newbg.jpg' %}");
+
         background-repeat:no-repeat;
         background-size:cover;
         height:100%;
         display:table; width:100%;
         text-align:center; vertical-align:middle;
         align:center;
-        background-color: white;
+        background-color: #0C0C0C;
      }
 
     h1{
-        color: white;
+        color: #FACC2E;
       }
 
    h2,h4 {
-     color: white;
+     color: #FACC2E;
      align: left;
 }
 
@@ -74,6 +74,35 @@ width: 120px;
 height: 100px;
 }
 
+
+ input[type=text], select {
+  width: 260px;
+  height: 40px;
+  color: white;
+  background: transparent;
+  padding: 10px 15px;
+  margin: 2px 0;
+  border: 1px solid #4B4B4B;
+  border-radius: 1px;
+
+}
+
+input[type=submit] {
+  width: 260px;
+  height: 40px;
+  background-color: #0082F0;
+  color: white;
+  padding: 10px 10px;
+  margin: 2px 0;
+  border: none;
+  border-radius: 1px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
 #div11, #div12, #div13, #div14, #div15, #div16 {
  margin: auto;
    width: 160px;
@@ -110,22 +139,65 @@ color: white;
   top: 8px;
   left: 16px;
   font-size: 18px;
-  width: 110px;
-  height: 80px;
+  width: 80px;
+  height: 70px;
   margin-left: 25px;
   margin-top: 25px;
 }
 
+
+/* The Modal (background) */
+.modal {
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+    display: block;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+
     </style>
 </head>
 <body>
-<img src="{% static 'newericssonlogo.png'%}" alt="W3Schools.com" class="topleft"/>
+
 {% block content %}
 
 {% endblock %}
-
 <script src="{% static 'js/jquery.min.js'%}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script defer src="{% static 'js/webcam_!.js'%}"></script>
+<script defer src="{% static 'js/webcam.js'%}"></script>
 <script src="{% static 'js/validate.js' %}"></script>
 </body>
 </html>

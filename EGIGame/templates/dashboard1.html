@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+
+<div style="width: 100%; display: table; height: 50px;  background-color: #0C0C0C;">
+    <div style="width:100%; text-align:center;">
+        <div style="float:left; width:500px; text-align:left;margin:10px;">
+            <img src="{%static 'ericsson_econ.png'%}" class="avatar" alt="Ericsson"/>
+            <font color="white" style="font-family: Times New Roman; margin-left:4px;">Chaitanya</font>
+        </div>
+
+        <div style="float:right; width:500px; text-align:right; margin:10px;">
+            <img src="{% static  'userr.png'%}" alt="Avatar" class="avatar">
+            <font color="white" style="font-family: Times New Roman; margin-right:20px;">{{loggeduser }}</font>
+        </div>
+    </div>
+</div>
+
+<form id="dash_form" class="form-inline" name="dash_form" method="post">
+       {% csrf_token %}
+
+   <div id="wrapper">
+    <div id="left" style="float: left; width: 440px; height: 560px; background: #FFA33B;  display: flex;flex-wrap: wrap;align-content: center;">
+        <h3 align="center"><font color="#ffffff" style="margin:5px;">{{ list_data.question }}</font></h3>
+    </div>
+    <div id="right" style="float: left; width: 810px; height: 560px; display: flex;flex-wrap: wrap;align-content: center;">
+<div class="row">
+  <div class="col-sm-6">
+     <div class="card">
+      <div>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Special title treatment</h5>
+        <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+        <a href="#" class="btn btn-primary">Go somewhere</a>
+      </div>
+    </div>
+  </div>
+</div>
+    </div>
+   </div>
+
+
+
+</form>
+{% endblock %}

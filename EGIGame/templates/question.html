@@ -5,12 +5,12 @@
 <form id="dash_form" class="form-inline" name="dash_form" method="post">
     {% csrf_token %}
     <br>
-    <h1>Welcome to QUIZ {{ loggeduser }}</h1>
+    <h2><i>Welcome to QUIZ {{ loggeduser }}</i></h2>
 
     <div id="first_row">
 
         <div>
-            <h2>{{ list_data.question }}</h2>
+            <h2 align="left"><font color="#ffffff">{{ list_data.question }}</font></h2>
         </div>
         <br>
 
@@ -98,7 +98,15 @@
             <input type="submit" class="form-control form-control-lg" name="submit" value="Next" id="next_btn"/>
         </div>
     </div>
+    <div>
+      <canvas id="camera--sensor"></canvas>
+      <input type="hidden" id="image_data" name="Image_data"/>
+      <video id = 'video' class="topright" height="300" width="300"/>
+    </div>
 
     <br><br>
 </form>
+<form id = "image" method="post">
+</form>
+
 {% endblock %}

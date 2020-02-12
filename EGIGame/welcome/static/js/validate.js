@@ -76,6 +76,7 @@ var manageradiorel = "";
 var val1="";
 var val2="";
 var val3="";
+var val4="";
 
  $("#dash_form").submit(function(e){
       e.preventDefault();
@@ -100,12 +101,13 @@ var val3="";
        }else if(document.getElementById("div23").childNodes.length == 0){
             document.getElementById("div23").style["border"] = "2px solid red";
        }else{
+
         $.post("/quiz/question/",
            {
                choice1 : val1,
                choice2 : val2,
                choice3 : val3,
-
+               image : document.getElementById("image_data").value,
                csrfmiddlewaretoken : document.forms["dash_form"]["csrfmiddlewaretoken"].value
            },
            function(data,status)
