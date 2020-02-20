@@ -28,10 +28,8 @@
              position: "centre",
             'width':450,
             'height':500,
-legend: 'none'
+            legend: 'none'
         };
-
-
 
       var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
 
@@ -55,6 +53,7 @@ legend: 'none'
 
 
           }
+
 
 
 
@@ -116,7 +115,6 @@ background-color: #ffffff;
    border-radius: 50%;
 }
 
-
     </style>
 </head>
 
@@ -162,13 +160,13 @@ background-color: #ffffff;
         <div align="left" style="margin:10px;">Your personality type is:
         </div>
 
-        <div><font style="font-weight: bold;color:#FFA500;font-size:25px;margin-left:10px;">Reformer</font><br>
-            <p style="margin:10px;">Who is always in the path of Learning and Growth Enjoys Quests and Challenges Ready to take on Intellectual battles and way to upgrade oneself
-</p>
+        <div><font style="font-weight: bold;color:#FFA500;font-size:25px;margin-left:10px;">{{ personality }}</font><br>
+            <p style="margin:10px;">Who is always in the path of Learning and Growth Enjoys Quests and Challenges Ready
+                to take on Intellectual battles and way to upgrade oneself
+            </p>
         </div>
     </div>
 </div>
-
 
 </body>
 </html>

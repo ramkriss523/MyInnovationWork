@@ -38,11 +38,13 @@ choice3 = None
 buf = None
 arydata = None
 arydata1 = None
+personality = None
 
 data_final_gender = None
 
 dic_finaldata = {}
 dic_totaldata = {}
+arrynewfinaldata = None
 
 progressflagval = 14
 
@@ -54,7 +56,7 @@ emotions = []
 
 # Class Based View for Questionaries
 class HomePageView(TemplateView):
-    template_name = "question.html"
+    template_name = "question1.html"
 
     # modeldata = QuestionData
 
@@ -180,7 +182,7 @@ def email_send():
 
 # DashPageView
 class DashPageView(TemplateView):
-    template_name = "dashboard.html"
+    template_name = "dashboard1.html"
 
     # modeldata = QuestionData
 
@@ -190,8 +192,9 @@ class DashPageView(TemplateView):
         if dbdata.UserData.objects.filter(signum=data_signum).exists():
             return render(request, 'login.html', {'registered': True, "final_data": dic_data})
         else:
+
             return render(request, self.template_name,
-                          {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data})
+                          {'loggeduser': data_final_gender, 'list_data': arrynewfinaldata,'list_data1': dic_data, 'flag_data': int_data})
 
     def post(self, request, **kwargs):
         global data_signum
@@ -201,6 +204,7 @@ class DashPageView(TemplateView):
         global ls
         global entry_list
         global dic_data
+        global arrynewfinaldata
 
         global data_email
         data_email = request.POST.get("email")
@@ -265,8 +269,11 @@ class DashPageView(TemplateView):
                 'image4': entry_list[int_data].image5.url,
                 'image5': entry_list[int_data].image6.url,
             }
+
+            arrynewfinaldata = [entry_list[int_data].option1,entry_list[int_data].option2,entry_list[int_data].option3,
+                                entry_list[int_data].option4, entry_list[int_data].option5, entry_list[int_data].option6]
             return render(request, self.template_name,
-                          {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data})
+                          {'loggeduser': data_final_gender, 'list_data': arrynewfinaldata,'list_data1': dic_data, 'flag_data': int_data})
 
 
 def question(request):
@@ -276,7 +283,6 @@ def question(request):
 # Create an object for the pie3d chart using the FusionCharts class constructor
 def chart(request):
     if request.POST:
-        print("Hello Pie")
         global choice1
         global choice2
         global choice3
@@ -307,6 +313,7 @@ def chart(request):
         global ls
         global entry_list
         global arydata1
+        global personality
 
         ls = dbdata.UserData.objects.all()
         for i in ls:
@@ -318,12 +325,12 @@ def chart(request):
             dic_totaldata["Individualist"] = dic_totaldata.get("Individualist", 0) + int(i.Individualist)
 
         arydata1 = [['Task', 'Hours per Day'],
-                   ["Whizz-Kid", dic_totaldata.get('Whizz-Kid', 0)],
-                   ['Humanitarian', dic_totaldata.get('Humanitarian', 0)],
-                   ['Reformer', dic_totaldata.get('Reformer', 0)],
-                   ['Socialite', dic_totaldata.get('Socialite', 0)],
-                   ['Sportsperson', dic_totaldata.get('Sportsperson', 0)],
-                   ['Individualist', dic_totaldata.get('Individualist', 0)]]
+                    ["Whizz-Kid", dic_totaldata.get('Whizz-Kid', 0)],
+                    ['Humanitarian', dic_totaldata.get('Humanitarian', 0)],
+                    ['Reformer', dic_totaldata.get('Reformer', 0)],
+                    ['Socialite', dic_totaldata.get('Socialite', 0)],
+                    ['Sportsperson', dic_totaldata.get('Sportsperson', 0)],
+                    ['Individualist', dic_totaldata.get('Individualist', 0)]]
 
         arydata = [['Task', 'Hours per Day'],
                    ["Whizz-Kid", dic_finaldata.get('Whizz-Kid', 0)],
@@ -333,5 +340,18 @@ def chart(request):
                    ['Sportsperson', dic_finaldata.get('Sportsperson', 0)],
                    ['Individualist', dic_finaldata.get('Individualist', 0)]]
 
+        max_data = {'Whizz-Kid': int(dic_finaldata.get('Whizz-Kid', 0)),
+                    'Humanitarian': int(dic_finaldata.get('Humanitarian', 0)),
+                    'Reformer': int(dic_finaldata.get('Reformer', 0)),
+                    'Socialite': int(dic_finaldata.get('Socialite', 0)),
+                    'Sportsperson': int(dic_finaldata.get('Sportsperson', 0)),
+                    'Individualist': int(dic_finaldata.get('Individualist', 0))}
+        v = list(max_data.values())
+
+        # taking list of car keys in v
+        k = list(max_data.keys())
+        personality = k[v.index(max(v))];
+
     return render(request, 'piechart1.html',
-                  {'array': json.dumps(arydata),'array1': json.dumps(arydata1), 'loggeduser': data_final_gender})
+                  {'array': json.dumps(arydata), 'array1': json.dumps(arydata1), 'loggeduser': data_final_gender,
+                   'personality': personality})

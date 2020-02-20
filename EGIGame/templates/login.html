@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 {% load static %}
+<body style="background-color: #0C0C0C;">
 <form id="login_form" class="form-inline" name="login_form" method="post">
     {% csrf_token %}
     <br><br>
@@ -17,11 +18,13 @@
     <br>
     {% endif %}
 
-    <input type="text"  name="fullname" placeholder="Full Name" maxlength="50" value="" required><br><br>
+    <input type="text" name="fullname" placeholder="Full Name" maxlength="50" value="" required><br><br>
     <input type="text" name="signumname" placeholder="Signum" maxlength="7" required><br><br>
-    <input type="text" name="email" placeholder="E-mail" maxlength="50" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required><br><br>
-    <input type="text" name="exp" placeholder="Experience" maxlength="2" oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');"  required><br><br>
-    <span  class="labelgender"><input type="radio" name="gender" value="male" checked> Male</span>&nbsp;&nbsp;
+    <input type="text" name="email" placeholder="E-mail" maxlength="50"
+           pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$" required><br><br>
+    <input type="text" name="exp" placeholder="Experience" maxlength="2"
+           oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" required><br><br>
+    <span class="labelgender"><input type="radio" name="gender" value="male" checked> Male</span>&nbsp;&nbsp;
     <span class="labelgender"><input type="radio" name="gender" value="female"> Female</span><br><br>
     <input type="submit" value="Sign in" id="login_button" name="log_in">
 
@@ -49,4 +52,5 @@
     {% endif %}
 
 </form>
+</body>
 {% endblock %}

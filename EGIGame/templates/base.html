@@ -16,7 +16,7 @@ body {
         display:table; width:100%;
         text-align:center; vertical-align:middle;
         align:center;
-        background-color: #0C0C0C;
+
      }
 
     h1{
@@ -34,7 +34,6 @@ table {
     border-collapse: collapse;
 }
 
-form { display: inline-block; }
 
 td,th {
 border: 1px solid red;
@@ -59,19 +58,19 @@ background-size: cover;
 }
 
 #div21, #div22, #div23 {
-  width: 160px;
-  height: 120px;
+  width: 240px;
+  height: 60px;
    margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
+  margin-left: 20px;
   display: block;
   padding: 10px;
   border: 2px solid white;
 }
 
 img{
-width: 120px;
-height: 100px;
+width: 180px;
+height: 40px;
 }
 
 
@@ -105,8 +104,8 @@ input[type=submit]:hover {
 
 #div11, #div12, #div13, #div14, #div15, #div16 {
  margin: auto;
-   width: 160px;
-  height: 120px;
+   width: 240px;
+  height: 60px;
   padding: 10px;
 display: block;
 border: 1px solid white;
@@ -114,7 +113,7 @@ border: 1px solid white;
 
 label{
  width: 160px;
- height: 60px;
+ height: 40px;
  color: white;
 }
 
@@ -178,6 +177,10 @@ color: white;
   font-weight: bold;
 }
 
+.lidata{
+
+}
+
 .close:hover,
 .close:focus {
   color: #000;
@@ -185,6 +188,113 @@ color: white;
   cursor: pointer;
 }
 
+.avatar {
+  vertical-align: middle;
+  width: 30px;
+  height: 30px;
+  margin-left:10px;
+}
+.part1
+{
+    margin-right:300px;
+}
+
+
+body {
+	font-family: arial;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+	overflow: hidden;
+	touch-action: none;
+	-ms-touch-action: none;
+}
+
+h4 {
+	margin: 5px;
+}
+
+#main_window {
+	width: 800px;
+	margin: auto;
+	height: 380px;
+	padding: 10px;
+	margin-top: 30px;
+	overflow: hidden;
+}
+
+#left_pane {
+	float: left;
+	width: 39%;
+	height: 350px;
+	background-color: rgb(250, 250, 250);
+}
+
+#available_metrics_filter {
+	margin: 10px;
+	border: 1px solid gray;
+	padding: 5px;
+	height: 300px;
+}
+
+#available_metrics_list {
+	padding: 0px;
+	padding: 10px;
+}
+
+#available_metrics_list li {
+	margin-top: -1px;
+	border: 1px solid gray;
+	margin-top:10px;
+	padding: 5px;
+	list-style-type: none;
+	background-color: white;
+}
+
+#right_pane {
+	float: left;
+	width: 59%;
+	background-color: rgb(250, 250, 250);
+	height: 350px;
+}
+
+#selected_metrics_list {
+	margin: 10px;
+	border: 1px solid gray;
+	padding: 10px;
+	background-color: white;
+	height: 300px;
+}
+
+#selected_metrics_list li {
+	margin-top: 30px;
+	margin-bottom:15px;
+	border: 1px solid gray;
+	padding: 10px;
+	list-style-type: none;
+	background-color: white;
+}
+
+#selected_metrics_list li:last-child {
+	border: 1px dotted gray;
+	padding: 10px;
+	margin-top:30px;
+}
+
+#next_metric {
+	color: gray;
+}
+
+.draggable {
+	position: relative;
+	cursor: default;
+}
+
+.dragOver {
+	background-color: rgb(232, 232, 255) !important;
+}
 
 
     </style>

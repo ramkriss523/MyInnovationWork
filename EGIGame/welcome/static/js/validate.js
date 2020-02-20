@@ -220,8 +220,3 @@ function drop16(ev) {
      return true;
     }
 }
-
-//$(".img-circular").click(function(){
-//    $("input").trigger("click");
-//
-//});
