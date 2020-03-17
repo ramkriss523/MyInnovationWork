@@ -5,7 +5,6 @@ import numpy as np
 import json
 
 import smtplib, ssl
-from .fusioncharts import FusionCharts
 from django.views.generic import TemplateView
 import pickle
 
@@ -47,6 +46,7 @@ dic_totaldata = {}
 arrynewfinaldata = None
 
 progressflagval = 14
+points_data = 75
 
 commondata = ['Whizz-Kid', 'Humanitarian', 'Reformer', 'Socialite', 'Sportsperson', 'Individualist']
 '''model = pickle.load(open('C:\\Users\\eyalram\\Desktop\\EGIGame\\model.pkl', 'rb'))'''
@@ -69,7 +69,8 @@ class HomePageView(TemplateView):
         else:
             return render(request, self.template_name,
                           {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data,
-                           'progressdata': progressflagval})
+                           'flag_data1': "0" + str(int_data + 1),
+                           'progressdata': progressflagval, 'pointsdata': points_data})
 
     def post(self, request, **kwargs):
         global ls
@@ -79,6 +80,7 @@ class HomePageView(TemplateView):
         global choice1
         global choice2
         global choice3
+        global points_data
         global progressflagval
         # retrive image from canvas
         ImageData = request.POST.get("image")
@@ -95,12 +97,11 @@ class HomePageView(TemplateView):
 
         #######################################
         list_emotions.append(get_frame(image))
-        print(list_emotions)
-        #######################################
 
         choice1 = request.POST.get("choice1")
         choice2 = request.POST.get("choice2")
         choice3 = request.POST.get("choice3")
+        points_data = request.POST.get("points")
 
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice1)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice1)) - 1], 0) + 100
@@ -111,8 +112,7 @@ class HomePageView(TemplateView):
         dic_finaldata[commondata[int(list(dic_data.values()).index(choice3)) - 1]] = dic_finaldata.get(
             commondata[int(list(dic_data.values()).index(choice3)) - 1], 0) + 20
 
-        # for k, v in dic_finaldata.items():
-        #     print(k, v)
+        points_data = int(points_data) + 75
 
         progressflagval = progressflagval + 14
         int_data = int_data + 1
@@ -140,16 +140,19 @@ class HomePageView(TemplateView):
             }
             return render(request, self.template_name,
                           {'loggeduser': data_final_gender, 'list_data': dic_data, 'flag_data': int_data,
-                           'progressdata': progressflagval})
+                           'flag_data1': "0" + str(int_data + 1),
+                           'progressdata': progressflagval, 'pointsdata': points_data})
 
 
 def index(request):
     global progressflagval
     global int_data
+    global points_data
     global dic_finaldata
     dic_finaldata = {}
     progressflagval = 14
     int_data = 0
+    points_data = 75
     user_data = UserData()
 
     '''int_features = [7,40,50]
@@ -194,7 +197,8 @@ class DashPageView(TemplateView):
         else:
 
             return render(request, self.template_name,
-                          {'loggeduser': data_final_gender, 'list_data': arrynewfinaldata,'list_data1': dic_data, 'flag_data': int_data})
+                          {'loggeduser': data_final_gender, 'list_data1': arrynewfinaldata, 'list_data': dic_data,
+                           'flag_data': int_data, 'pointsdata': points_data})
 
     def post(self, request, **kwargs):
         global data_signum
@@ -219,8 +223,6 @@ class DashPageView(TemplateView):
             data_final_gender = "Mr. " + data_fullname
         else:
             data_final_gender = "Ms. " + data_fullname
-
-        print(data_gender)
 
         ls = dbdata.QuestionData.objects.all()
         entry_list = list(dbdata.QuestionData.objects.all())
@@ -270,10 +272,13 @@ class DashPageView(TemplateView):
                 'image5': entry_list[int_data].image6.url,
             }
 
-            arrynewfinaldata = [entry_list[int_data].option1,entry_list[int_data].option2,entry_list[int_data].option3,
-                                entry_list[int_data].option4, entry_list[int_data].option5, entry_list[int_data].option6]
+            arrynewfinaldata = [entry_list[int_data].option1, entry_list[int_data].option2,
+                                entry_list[int_data].option3,
+                                entry_list[int_data].option4, entry_list[int_data].option5,
+                                entry_list[int_data].option6]
             return render(request, self.template_name,
-                          {'loggeduser': data_final_gender, 'list_data': arrynewfinaldata,'list_data1': dic_data, 'flag_data': int_data})
+                          {'loggeduser': data_final_gender, 'list_data1': arrynewfinaldata, 'list_data': dic_data,
+                           'flag_data': int_data, 'pointsdata': points_data})
 
 
 def question(request):
@@ -347,8 +352,6 @@ def chart(request):
                     'Sportsperson': int(dic_finaldata.get('Sportsperson', 0)),
                     'Individualist': int(dic_finaldata.get('Individualist', 0))}
         v = list(max_data.values())
-
-        # taking list of car keys in v
         k = list(max_data.keys())
         personality = k[v.index(max(v))];
 

@@ -86,6 +86,7 @@ var val4="";
                choice1 : val1,
                choice2 : val2,
                choice3 : val3,
+               points : document.getElementById('lbl_point').innerHTML,
                csrfmiddlewaretoken : document.forms["dash_form"]["csrfmiddlewaretoken"].value
            },
            function(data,status)
@@ -107,6 +108,7 @@ var val4="";
                choice1 : val1,
                choice2 : val2,
                choice3 : val3,
+               points : document.getElementById('lbl_point').innerHTML,
                image : document.getElementById("image_data").value,
                csrfmiddlewaretoken : document.forms["dash_form"]["csrfmiddlewaretoken"].value
            },
@@ -133,10 +135,10 @@ function drop1(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById("div21").childNodes.length == 0){
-     document.getElementById("div21").style["border"] = "2px solid white";
+     document.getElementById("div21").style["border"] = "1px dashed grey";
     val1 = document.getElementById(data).alt;
   ev.target.appendChild(document.getElementById(data));
-
+    document.getElementById("div"+data.substring(4)).style["border"] = "1px solid #0082F0";
   }
 }
 
@@ -144,9 +146,10 @@ function drop2(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById("div22").childNodes.length == 0){
-   document.getElementById("div22").style["border"] = "2px solid white";
+   document.getElementById("div22").style["border"] = "1px dashed grey";
   val2 = document.getElementById(data).alt;
   ev.target.appendChild(document.getElementById(data));
+  document.getElementById("div"+data.substring(4)).style["border"] = "1px solid #0082F0";
  }
 }
 
@@ -154,9 +157,10 @@ function drop3(ev) {
   ev.preventDefault();
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById("div23").childNodes.length == 0){
-   document.getElementById("div23").style["border"] = "2px solid white";
+   document.getElementById("div23").style["border"] = "1px dashed grey";
   val3 = document.getElementById(data).alt;
   ev.target.appendChild(document.getElementById(data));
+  document.getElementById("div"+data.substring(4)).style["border"] = "1px solid #0082F0";
   }
 }
 
@@ -165,6 +169,7 @@ function drop11(ev) {
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById(data).id.toString()=="drag11"){
      ev.target.appendChild(document.getElementById(data));
+     document.getElementById("div11").style["border"] = "none";
   }
 }
 
@@ -173,6 +178,7 @@ function drop12(ev) {
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById(data).id.toString()=="drag12"){
      ev.target.appendChild(document.getElementById(data));
+     document.getElementById("div12").style["border"] = "none";
   }
 }
 
@@ -181,6 +187,7 @@ function drop13(ev) {
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById(data).id.toString()=="drag13"){
      ev.target.appendChild(document.getElementById(data));
+     document.getElementById("div13").style["border"] = "none";
   }
 }
 
@@ -189,6 +196,7 @@ function drop14(ev) {
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById(data).id.toString()=="drag14"){
      ev.target.appendChild(document.getElementById(data));
+     document.getElementById("div14").style["border"] = "none";
   }
 }
 
@@ -197,6 +205,7 @@ function drop15(ev) {
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById(data).id.toString()=="drag15"){
      ev.target.appendChild(document.getElementById(data));
+     document.getElementById("div15").style["border"] = "none";
   }
 }
 
@@ -205,6 +214,7 @@ function drop16(ev) {
   var data = ev.dataTransfer.getData("text");
   if(document.getElementById(data).id.toString()=="drag16"){
      ev.target.appendChild(document.getElementById(data));
+     document.getElementById("div16").style["border"] = "none";
   }
 }
 
@@ -219,4 +229,66 @@ function drop16(ev) {
     }else{
      return true;
     }
+}
+
+
+// Get the modal
+var modal = document.getElementById("myModal");
+var letsgo_btn = document.getElementById("letsgo_btn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+}
+
+letsgo_btn.onclick = function() {
+  modal.style.display = "none";
+}
+
+var modal1 = document.getElementById("myModal1");
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }else if (event.target == modal1) {
+    modal1.style.display = "none";
+    var el = document.getElementById('lbl_point');
+    text = (el.innerText || el.textContent);
+    document.getElementById('lbl_point').innerHTML = +text+10;
+     document.getElementById('myBtn').disabled = true;
+  }
+}
+
+// Get the modal
+var close_btn = document.getElementById("close_btn");
+
+// Get the <span> element that closes the modal
+var span1 = document.getElementsByClassName("close")[0];
+
+// When the user clicks on <span> (x), close the modal
+span1.onclick = function() {
+  modal1.style.display = "none";
+  var el = document.getElementById('lbl_point');
+  text = (el.innerText || el.textContent);
+  document.getElementById('lbl_point').innerHTML = +text+10;
+   document.getElementById('myBtn').disabled = true;
+}
+
+close_btn.onclick = function() {
+  modal1.style.display = "none";
+  var el = document.getElementById('lbl_point');
+  text = (el.innerText || el.textContent);
+  document.getElementById('lbl_point').innerHTML = +text+10;
+   document.getElementById('myBtn').disabled = true;
+}
+
+function openNav() {
+  modal1.style.display = "block";
+}
+
+function closeNav() {
+  document.getElementById("myNav").style.width = "0%";
 }

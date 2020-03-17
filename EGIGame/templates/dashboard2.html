@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block content %}
+
+{% load static %}
+<div style="width: 100%; display: table; height: 50px;  background-color: #0C0C0C;">
+    <div style="width:100%; text-align:center;">
+        <div style="float:left; width:500px; text-align:left;margin:10px;">
+            <img src="{%static 'ericsson_econ.png'%}" class="avatar" alt="Ericsson"/>
+            <font color="white" style="font-family: Times New Roman; margin-left:4px;">Chaitanya</font>
+        </div>
+
+        <div style="float:right; width:500px; text-align:right; margin:10px;">
+            <img src="{% static  'userr.png'%}" alt="Avatar" class="avatar">
+            <font color="white" style="font-family: Times New Roman; margin-right:20px;">{{loggeduser }}</font>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid">
+    <form id="dash_form" name="dash_form" method="post">
+        {% csrf_token %}
+        <div class="row">
+
+            <div class="col-lg-4" style="background: #FFA33B; height:560px;">
+                <div>
+                    <canvas id="camera--sensor"></canvas>
+                    <input type="hidden" id="image_data" name="Image_data"/>
+                    <video id='video' height="300" width="300"/>
+                </div>
+
+                <div>
+                    <p><font color="#ffffff" style="font-size:20px;">{{ list_data.question }}</font></p>
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div style="background-color:green; height:45px; width:800px; margin-top:15px; margin-left:10px; align:center; padding:10px;">
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-striped active" id="progress-bar" role="progressbar"
+                             aria-valuenow="0"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 14%;">
+                        </div>
+                    </div>
+                </div>
+
+                <div id="main_window" class="light">
+                    <div class="row">
+                        <div class="drop-area-example column lg-6 xl-3">
+                            <div class="drop-area">
+                                <div class="empty-state">
+                                    <div><i class="icon icon-plus text-xl"></i></div>
+                                    <div>Empty container</div>
+                                    <div class="color-gray">Add an item by dragging <br> into this container</div>
+                                </div>
+                                <div class="card draggable">
+                                    <div class="header">
+                                        <div class="left">
+                                            <div class="title">Move this card</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card draggable">
+                                    <div class="header">
+                                        <div class="left">
+                                            <div class="title">Move this card</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card draggable">
+                                    <div class="header">
+                                        <div class="left">
+                                            <div class="title">Move this card</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card draggable">
+                                    <div class="header">
+                                        <div class="left">
+                                            <div class="title">Move this card</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="drop-area-example column lg-6 xl-3">
+                            <div class="drop-area">
+                                <div class="empty-state">
+                                    <div><i class="icon icon-plus text-xl"></i></div>
+                                    <div>Empty container</div>
+                                    <div class="color-gray">Add an item by dragging <br> into this container</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="myFunction()" style="width:100px;">Click me</button>
+
+        </div>
+    </form>
+</div>
+
+{% endblock %}
